@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import { Text, TouchableOpacity, View } from "react-native";
 import * as yup from "yup";
 
+import { RootStackParamList } from "../../routes/types";
 import { TextField } from "../components/inputs/TextField";
-import { RootStackParamList } from "../routes/types";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
