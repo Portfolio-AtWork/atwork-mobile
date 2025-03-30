@@ -10,6 +10,7 @@ type TextFieldProps = {
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
   error?: string;
   onBlur?: () => void;
+  editable?: boolean;
 };
 
 export const TextField = ({
@@ -22,6 +23,7 @@ export const TextField = ({
   autoCapitalize = "none",
   error,
   onBlur,
+  editable = true,
 }: TextFieldProps) => {
   return (
     <>
@@ -35,6 +37,7 @@ export const TextField = ({
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         onBlur={onBlur}
+        editable={editable}
       />
       {error && <Text className="text-red-500">{error}</Text>}
     </>

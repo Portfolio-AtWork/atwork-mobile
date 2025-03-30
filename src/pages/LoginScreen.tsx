@@ -1,10 +1,13 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import axios from "axios";
 import { useFormik } from "formik";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import * as yup from "yup";
 
 import { RootStackParamList } from "../../routes/types";
+import api from "../../services/api";
 import { TextField } from "../components/inputs/TextField";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
@@ -26,15 +29,36 @@ export function LoginScreen() {
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      const loginData = {
-        Login: values.login,
-        Senha: values.password,
-        TP_Login: "F",
-      };
+    onSubmit: async (values) => {
+      try {
+        const loginData = {
+          Login: values.login,
+          Senha: values.password,
+          TP_Login: "F",
+        };
 
-      console.log("Login:", loginData);
-      navigation.navigate("History");
+        const response = await api.post("/login/auth", loginData);
+
+        await AsyncStorage.setItem("@App:token", response.data.token);
+
+        api.defaults.headers.common["Authorization"] =
+          `Bearer ${response.data.token}`;
+
+        navigation.navigate("History");
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            formik.setErrors({
+              login: "Usuário ou senha inválidos",
+              password: "Usuário ou senha inválidos",
+            });
+          } else {
+            formik.setErrors({
+              login: "Erro ao realizar login. Tente novamente.",
+            });
+          }
+        }
+      }
     },
   });
 
@@ -54,6 +78,7 @@ export function LoginScreen() {
               placeholder="Seu Login"
               label="Login"
               error={formik.touched.login ? formik.errors.login : undefined}
+              editable={!formik.isSubmitting}
             />
           </View>
 
@@ -61,26 +86,40 @@ export function LoginScreen() {
             <TextField
               value={formik.values.password}
               onChangeText={formik.handleChange("password")}
+              //onBlur={formik.handleBlur("password")}
               placeholder="Sua senha"
               label="Senha"
               secureTextEntry
               error={
                 formik.touched.password ? formik.errors.password : undefined
               }
+              editable={!formik.isSubmitting}
             />
           </View>
         </View>
 
         <TouchableOpacity
-          className="rounded-lg bg-blue-600 py-4"
+          className={`rounded-lg py-4 ${
+            formik.isSubmitting ? "bg-blue-400" : "bg-blue-600"
+          }`}
           onPress={() => formik.handleSubmit()}
+          disabled={formik.isSubmitting}
         >
-          <Text className="text-center text-lg font-semibold text-white">
-            Entrar
-          </Text>
+          {formik.isSubmitting ? (
+            <View className="flex-row items-center justify-center gap-x-2">
+              <ActivityIndicator color="white" />
+              <Text className="text-center text-lg font-semibold text-white">
+                Entrando...
+              </Text>
+            </View>
+          ) : (
+            <Text className="text-center text-lg font-semibold text-white">
+              Entrar
+            </Text>
+          )}
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity disabled={formik.isSubmitting}>
           <Text className="text-center text-blue-600">Esqueceu sua senha?</Text>
         </TouchableOpacity>
       </View>
