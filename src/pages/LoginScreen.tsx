@@ -40,6 +40,7 @@ export function LoginScreen() {
         const response = await api.post("/login/auth", loginData);
 
         await AsyncStorage.setItem("@App:token", response.data.token);
+        await AsyncStorage.setItem("@App:nome", response.data.nome);
 
         api.defaults.headers.common["Authorization"] =
           `Bearer ${response.data.token}`;
