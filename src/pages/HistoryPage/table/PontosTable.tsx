@@ -40,6 +40,7 @@ export function PontosTable({ pontos }: PontosTableProps) {
     <View>
       {/* Cabeçalho da Tabela */}
       <View className="flex-row bg-gray-100 p-3 rounded-t-lg">
+        <Text className="flex-1 font-bold text-gray-700">Tipo</Text>
         <Text className="flex-1 font-bold text-gray-700">Data/Hora</Text>
         <Text className="w-24 font-bold text-gray-700">Status</Text>
       </View>

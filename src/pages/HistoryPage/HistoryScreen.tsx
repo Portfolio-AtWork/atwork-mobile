@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import api from "../../../services/api";
+import { PontoFilter } from "./filter/PontoFilter";
 import { LancarJustificativaModal } from "./lancar-justificativa-modal/LancarJustificativaModal";
 import { LancarPontoModal } from "./lancar-ponto-modal/LancarPontoModal";
 import { PontosTable } from "./table/PontosTable";
@@ -10,6 +11,7 @@ interface Ponto {
   ID: string;
   DT_Ponto: Date;
   ST_Ponto: string;
+  TP_Ponto: string;
 }
 
 export function HistoryScreen() {
@@ -17,14 +19,21 @@ export function HistoryScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalJustificativaVisible, SetIsModalJustificativaVisible] =
     useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const searchPontos = useCallback(async () => {
-    api.get("Ponto").then((response) => {
-      if (response.status === 200 && response.data.ok) {
-        setPontos(response.data.value);
-      }
-    });
-  }, []);
+    api
+      .get("Ponto", {
+        params: {
+          DT_Ponto: selectedDate,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200 && response.data.ok) {
+          setPontos(response.data.value);
+        }
+      });
+  }, [selectedDate]);
 
   const handlePostPonto = async () => {
     try {
@@ -75,6 +84,12 @@ export function HistoryScreen() {
       <View className="flex-1 p-6">
         <View>
           <Text className="text-2xl font-bold text-gray-900">Histórico</Text>
+        </View>
+        <View>
+          <PontoFilter
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         </View>
         <View className="mt-10">
           <PontosTable pontos={pontos} />
