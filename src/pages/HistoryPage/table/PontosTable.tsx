@@ -4,6 +4,7 @@ interface Ponto {
   ID: string;
   DT_Ponto: Date;
   ST_Ponto: string;
+  TP_Ponto: string;
 }
 
 interface PontosTableProps {
@@ -20,6 +21,12 @@ function formatStatus(status: string) {
   }
 
   return "Pendente";
+}
+
+function formatTipo(tp_ponto: string) {
+  if (tp_ponto === "E") return "Entrada";
+  else if (tp_ponto === "S") return "Saída";
+  else return "";
 }
 
 function getStatusColor(status: string) {
@@ -44,6 +51,9 @@ export function PontosTable({ pontos }: PontosTableProps) {
             key={index}
             className={`flex-row p-3 border-t border-gray-200 ${getStatusColor(ponto.ST_Ponto)}`}
           >
+            <Text className="flex-1 text-gray-600">
+              {formatTipo(ponto.TP_Ponto)}
+            </Text>
             <Text className="flex-1 text-gray-600">
               {new Date(ponto.DT_Ponto).toLocaleString()}
             </Text>

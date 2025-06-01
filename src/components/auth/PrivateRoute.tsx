@@ -11,7 +11,6 @@ export const PrivateRoute = ({ children }: { children: ReactNode }) => {
     if (!navigation) return;
 
     validateToken().then((response) => {
-      console.log("validando token jwt -> ", response);
       if (!response) {
         AsyncStorage.removeItem("@App:token");
         navigation.navigate("Login" as never);
