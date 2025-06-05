@@ -3,7 +3,7 @@ name: EAS Build & Deploy
 on:
   push:
     branches:
-      - main
+      - azure-branch
 
 jobs:
   build:
