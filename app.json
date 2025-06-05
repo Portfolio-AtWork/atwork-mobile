@@ -26,7 +26,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -35,12 +37,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gustavoh1709.atworkmobile"
+      "package": "com.gustavoh1709.atworkmobile",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "extra": {
       "eas": {
         "projectId": "0a2028b2-e96f-42a3-ac1d-ee4356a35fa9"
       }
-    }
+    },
+    "owner": "gustavoh1709"
   }
 }

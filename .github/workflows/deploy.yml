@@ -1,0 +1,34 @@
+name: Deploy React Native with Expo
+
+on:
+  push:
+    branches:
+      - main # ou a branch que você usar para deploy
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Instalar EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Login no Expo
+        run: eas whoami || eas login --token ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build app
+        run: eas build --platform all --profile production --non-interactive
+
+      - name: Submit app (Google Play / App Store)
+        run: eas submit --platform all --profile production --non-interactive
