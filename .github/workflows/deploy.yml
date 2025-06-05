@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }} # Login via variável de ambiente
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }} # Token do Expo para login
 
     steps:
       - name: Checkout do código
@@ -27,11 +27,13 @@ jobs:
         run: npm install -g eas-cli
 
       - name: Login no Expo
-        run: eas login --token $EXPO_TOKEN
+        run: eas login
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build APK Android (produção)
         run: eas build --platform android --profile production --non-interactive --output-format apk
 
-      # Se quiser submeter para a loja automaticamente, descomente abaixo:
-      # - name: Submeter app para a loja Google Play
+      # Se quiser submeter automaticamente para Google Play:
+      # - name: Submeter app para a Google Play
       #   run: eas submit --platform android --profile production --non-interactive
