@@ -1,14 +1,21 @@
+name: EAS Build & Deploy
+
+on:
+  push:
+    branches:
+      - azure-branch
+
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }} # Login via variável de ambiente
 
     steps:
-      - name: Checkout
+      - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -19,5 +26,9 @@ jobs:
       - name: Instalar EAS CLI
         run: npm install -g eas-cli
 
-      - name: Build para Android/iOS
+      - name: Build para Android e iOS (produção)
         run: eas build --platform all --profile production --non-interactive
+
+      # Se quiser submeter para a loja automaticamente, descomente abaixo:
+      # - name: Submeter app para as lojas
+      #   run: eas submit --platform all --profile production --non-interactive
