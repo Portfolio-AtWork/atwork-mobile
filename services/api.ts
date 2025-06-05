@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost:44302/", // substitua pela sua URL base
+  baseURL: "atwork-api-b6a2csaph8cpc9fr.canadacentral-01.azurewebsites.net/", // substitua pela sua URL base
 });
 
 // Interceptor para adicionar o token em todas as requisições
