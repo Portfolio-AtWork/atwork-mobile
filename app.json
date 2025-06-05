@@ -28,7 +28,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gustavoh1709.atworkmobile"
     },
     "android": {
       "adaptiveIcon": {
