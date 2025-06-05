@@ -56,7 +56,7 @@ export function PontosTable({ pontos }: PontosTableProps) {
               {formatTipo(ponto.TP_Ponto)}
             </Text>
             <Text className="flex-1 text-gray-600">
-              {new Date(ponto.DT_Ponto).toLocaleString()}
+              {ponto.DT_Ponto.toString()}
             </Text>
             <Text className="w-24 text-gray-600">
               {formatStatus(ponto.ST_Ponto)}
