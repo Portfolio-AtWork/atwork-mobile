@@ -1,9 +1,9 @@
-name: Deploy React Native with Expo
+name: EAS Build & Deploy
 
 on:
   push:
     branches:
-      - main # ou a branch que você usar para deploy
+      - main
 
 jobs:
   build:
@@ -25,10 +25,11 @@ jobs:
         run: npm install -g eas-cli
 
       - name: Login no Expo
-        run: eas whoami || eas login --token ${{ secrets.EXPO_TOKEN }}
+        run: eas login --token ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build app
+      - name: Build para Android e iOS (produção)
         run: eas build --platform all --profile production --non-interactive
 
-      - name: Submit app (Google Play / App Store)
-        run: eas submit --platform all --profile production --non-interactive
+      # Se quiser submeter para a loja automaticamente, descomente abaixo:
+      # - name: Submeter app para as lojas
+      #   run: eas submit --platform all --profile production --non-interactive
