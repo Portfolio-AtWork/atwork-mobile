@@ -26,14 +26,5 @@ jobs:
       - name: Instalar EAS CLI
         run: npm install -g eas-cli
 
-      - name: Login no Expo
-        run: eas login
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
       - name: Build APK Android (produção)
         run: eas build --platform android --profile production --non-interactive --output-format apk
-
-      # Se quiser submeter automaticamente para Google Play:
-      # - name: Submeter app para a Google Play
-      #   run: eas submit --platform android --profile production --non-interactive
