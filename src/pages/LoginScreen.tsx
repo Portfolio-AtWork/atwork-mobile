@@ -25,8 +25,8 @@ export function LoginScreen() {
 
   const formik = useFormik({
     initialValues: {
-      login: "",
-      password: "",
+      login: "gustavo_mobile",
+      password: "123",
     },
     validationSchema: loginSchema,
     onSubmit: async (values) => {

@@ -1,6 +1,8 @@
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import { parseDateTimeLocalAsSaoPaulo } from "lib/dateFormatter";
+import mime from "mime";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -14,7 +16,11 @@ import {
 interface LancarJustificativaModalProps {
   visible: boolean;
   onClose: () => void;
-  onConfirm: (justificativa: string, anexo?: string) => void;
+  onConfirm: (
+    justificativa: string,
+    anexo: string | null | undefined,
+    dt_justificativa: Date
+  ) => void;
 }
 
 export function LancarJustificativaModal({
@@ -69,17 +75,31 @@ export function LancarJustificativaModal({
         const fileContent = await FileSystem.readAsStringAsync(anexo.uri, {
           encoding: FileSystem.EncodingType.Base64,
         });
-        anexoBase64 = `data:image/jpeg;base64,${fileContent}`;
+
+        const mimeType = mime.getType(anexo.uri) || "application/octet-stream";
+
+        anexoBase64 = `data:${mimeType};base64,${fileContent}`;
       }
 
-      onConfirm(justificativa, anexoBase64);
+      const dt_justificativa = parseDateTimeLocalAsSaoPaulo(
+        new Date().toISOString()
+      );
+
+      onConfirm(justificativa, anexoBase64, dt_justificativa);
       onClose();
     } catch (error) {
-      Alert.alert("Erro", "Ocorreu um erro ao processar a imagem");
+      console.log("Erro", "Ocorreu um erro ao processar a imagem", error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (visible) {
+      setAnexo(null);
+      setJustificativa("");
+    }
+  }, [visible]);
 
   return (
     <Modal

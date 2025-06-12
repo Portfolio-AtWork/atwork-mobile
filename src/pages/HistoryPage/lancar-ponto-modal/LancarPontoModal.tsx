@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Platform, Text, TouchableOpacity, View } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -42,6 +42,12 @@ export function LancarPontoModal({
     hideDatePicker();
   };
 
+  useEffect(() => {
+    if (visible) {
+      setSelectedDate(new Date());
+    }
+  }, [visible]);
+
   return (
     <Modal
       visible={visible}
@@ -78,7 +84,7 @@ export function LancarPontoModal({
             onConfirm={handleConfirmDate}
             onCancel={hideDatePicker}
             is24Hour
-            locale="pt_BR" // Note que é pt_BR com underline, não hífen
+            locale="pt_BR"
             display={Platform.OS === "ios" ? "spinner" : "default"}
           />
 
