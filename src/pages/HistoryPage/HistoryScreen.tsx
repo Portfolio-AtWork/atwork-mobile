@@ -63,7 +63,7 @@ export function HistoryScreen() {
         params: { DT_Ponto: selectedDate },
       });
 
-      if (status === 200 && data.ok) {
+      if (status === 200 && data.ok && Array.isArray(data?.value)) {
         setPontos(data.value);
       }
     } catch (error) {
@@ -77,7 +77,7 @@ export function HistoryScreen() {
         params: { Ano: ano, Mes: mes },
       });
 
-      if (status === 200 && data.ok) {
+      if (status === 200 && data.ok && Array.isArray(data?.value)) {
         setJustificativas(data.value);
       }
     } catch (error) {
