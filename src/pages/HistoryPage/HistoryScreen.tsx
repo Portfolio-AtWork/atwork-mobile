@@ -1,7 +1,6 @@
 import { parseDateTimeLocalAsSaoPaulo } from "lib/dateFormatter";
-import { Calendar1, NotebookPen } from "lucide-react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import api from "../../../services/api";
 import { JustificativasFilter } from "./filter/JustificativaFilter";
@@ -63,7 +62,7 @@ export function HistoryScreen() {
         params: { DT_Ponto: selectedDate },
       });
 
-      if (status === 200 && data.ok && Array.isArray(data?.value)) {
+      if (status === 200 && data.ok) {
         setPontos(data.value);
       }
     } catch (error) {
@@ -77,7 +76,7 @@ export function HistoryScreen() {
         params: { Ano: ano, Mes: mes },
       });
 
-      if (status === 200 && data.ok && Array.isArray(data?.value)) {
+      if (status === 200 && data.ok) {
         setJustificativas(data.value);
       }
     } catch (error) {
@@ -184,6 +183,28 @@ export function HistoryScreen() {
     );
   }, [tab, registrarPonto]);
 
+  const renderIcon = useMemo(() => {
+    // if (tab === TABS.PONTOS) {
+    //   return (
+    //     <TouchableOpacity onPress={alternarTab}>
+    //       <Calendar1 />
+    //     </TouchableOpacity>
+    //   );
+    // }
+
+    // return (
+    //   <TouchableOpacity onPress={alternarTab}>
+    //     <NotebookPen />
+    //   </TouchableOpacity>
+    // );
+
+    return (
+      <TouchableOpacity onPress={alternarTab}>
+        <Text>X</Text>
+      </TouchableOpacity>
+    );
+  }, [tab]);
+
   useEffect(() => {
     fetchPontos();
   }, [fetchPontos]);
@@ -195,11 +216,7 @@ export function HistoryScreen() {
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1 p-6">
-        <Header title="Histórico">
-          <TouchableOpacity onPress={alternarTab}>
-            {tab === TABS.PONTOS ? <Calendar1 /> : <NotebookPen />}
-          </TouchableOpacity>
-        </Header>
+        <Header title="Histórico">{renderIcon}</Header>
 
         {renderConteudo}
       </View>
