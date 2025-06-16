@@ -36,9 +36,11 @@ export function LancarJustificativaModal({
 
   const handleAnexar = async () => {
     try {
+      const mediaTypes: ImagePicker.MediaType = "images";
+
       // Usando ImagePicker para selecionar apenas imagens
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: [mediaTypes],
         allowsEditing: false,
         quality: 1,
         base64: false,
