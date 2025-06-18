@@ -37,6 +37,7 @@ export const PontoFilter = ({
 
       {isPickerVisible && (
         <DateTimePicker
+          testID="dt_ponto"
           value={selectedDate}
           mode="date"
           display={Platform.OS === "ios" ? "spinner" : "default"}

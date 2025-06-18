@@ -18,6 +18,7 @@
     "@react-native-picker/picker": "2.9.0",
     "@react-navigation/native": "^7.0.19",
     "@react-navigation/native-stack": "^7.3.3",
+    "@testing-library/react-native": "^13.2.0",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "expo": "^52.0.46",
@@ -48,6 +49,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native-community/cli": "latest",
+    "@testing-library/jest-native": "^5.4.3",
+    "@types/jest": "^30.0.0",
     "@types/react": "~18.3.12",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
@@ -55,7 +58,9 @@
     "eslint-config-universe": "^12.0.1",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "react-test-renderer": "^18.3.1",
     "tailwindcss": "^3.4.0",
+    "ts-jest": "^29.4.0",
     "typescript": "~5.3.3"
   },
   "eslintConfig": {
@@ -63,5 +68,24 @@
     "root": true
   },
   "main": "node_modules/expo/AppEntry.js",
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|@react-native|@react-navigation)"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ]
+  }
 }

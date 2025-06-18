@@ -39,6 +39,7 @@ export const JustificativasFilter = ({
         </Text>
         <View className="rounded-md border border-gray-300 bg-white p-3">
           <Picker
+            testID="year-picker"
             selectedValue={selectedYear}
             onValueChange={(itemValue) => setSelectedYear(itemValue)}
           >
@@ -56,6 +57,7 @@ export const JustificativasFilter = ({
         </Text>
         <View className="rounded-md border border-gray-300 bg-white p-3">
           <Picker
+            testID="month-picker"
             selectedValue={selectedMonth}
             onValueChange={(itemValue) => setSelectedMonth(itemValue)}
           >

@@ -1,4 +1,3 @@
-import { Image as ImageIcon } from "lucide-react-native";
 import { useState } from "react";
 import {
   Image,
@@ -120,12 +119,13 @@ export function JustificativasTable({
 
             {j.TemImagemJustificativa ? (
               <TouchableOpacity
+                testID={`image-button-${j.ID_Justificativa}`}
                 className="w-20 items-center"
                 onPress={() =>
                   abrirModal(j.ImagemJustificativa, j.ImagemContentType)
                 }
               >
-                <ImageIcon color="#4B5563" size={20} />
+                🖼️
               </TouchableOpacity>
             ) : (
               <View className="w-20" />

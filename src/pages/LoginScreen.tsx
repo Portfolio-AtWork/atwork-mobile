@@ -119,10 +119,6 @@ export function LoginScreen() {
             </Text>
           )}
         </TouchableOpacity>
-
-        <TouchableOpacity disabled={formik.isSubmitting}>
-          <Text className="text-center text-blue-600">Esqueceu sua senha?</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
